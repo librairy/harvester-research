@@ -11,13 +11,15 @@ RUN mkdir $LIBRAIRY_HOME/files/collected
 
 WORKDIR /librairy
 
-ENV UPF_URL http://backingdata.org/dri/library/1.3/DRIresources-1.3.tar.gz
+#ENV UPF_URL http://backingdata.org/dri/library/1.3/DRIresources-1.3.tar.gz
+
+ADD http://backingdata.org/dri/library/1.2/DRIresources-1.2.tar.gz /librairy/driresources.tar.gz
 
 RUN set -x \
-	&& curl -fSL "$UPF_URL" -o driresources.tar.gz \
+#	&& curl -fSL "$UPF_URL" -o driresources.tar.gz \
 	&& tar -zxvf driresources.tar.gz \
 	&& rm driresources.tar.gz \
-	&& chmod -R 777 $CATALINA_HOME
+	&& chmod -R 777 /librairy/DRIresources-1.2
 
 WORKDIR /usr/local/tomcat
 

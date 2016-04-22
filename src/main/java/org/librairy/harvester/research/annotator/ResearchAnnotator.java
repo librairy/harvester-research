@@ -2,8 +2,8 @@ package org.librairy.harvester.research.annotator;
 
 import org.librairy.harvester.file.annotator.AnnotatedDocument;
 import org.librairy.harvester.file.annotator.Annotator;
-import org.librairy.harvester.research.UpfGateProcessor;
-import org.librairy.harvester.research.data.DocumentWrapper;
+import org.librairy.harvester.research.data.AnnotatedPaper;
+import org.librairy.harvester.research.processor.DocumentProcessor;
 import org.librairy.model.domain.resources.Item;
 import org.librairy.model.domain.resources.Resource;
 import org.librairy.storage.UDM;
@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -28,7 +26,7 @@ public class ResearchAnnotator implements Annotator{
     private static final Logger LOG = LoggerFactory.getLogger(ResearchAnnotator.class);
 
     @Autowired
-    UpfGateProcessor processor;
+    DocumentProcessor documentProcessor;
 
     @Autowired
     UDM udm;
@@ -36,9 +34,7 @@ public class ResearchAnnotator implements Annotator{
     @Override
     public AnnotatedDocument annotate(String itemURI) {
 
-        LOG.debug("Trying to annotate item: " + itemURI);
-
-
+        LOG.info("Trying to annotate item: " + itemURI);
         Optional<Resource> res = udm.read(Resource.Type.ITEM).byUri(itemURI);
 
         if (!res.isPresent()){
@@ -49,23 +45,15 @@ public class ResearchAnnotator implements Annotator{
         try {
             Item item = res.get().asItem();
 
-
-
-            DocumentWrapper document = processor.process(item.getUrl());
+            AnnotatedPaper annotatedPaper = documentProcessor.process(item.getUrl());
 
             // Retrieve rhetorical classes
-            Map<String, String> rhetoricalClasses = new HashMap();
-            rhetoricalClasses.put("abstract",document.getAbstractContent());
-            rhetoricalClasses.put("approach",document.getApproachContent());
-            rhetoricalClasses.put("background",document.getBackgroundContent());
-            rhetoricalClasses.put("challenge",document.getChallengeContent());
-            rhetoricalClasses.put("futureWork",document.getFutureWorkContent());
-            rhetoricalClasses.put("outcome",document.getOutcomeContent());
-            annotatedDocument.setRhetoricalClasses(rhetoricalClasses);
+            annotatedDocument.setRhetoricalClasses(annotatedPaper.getRhetoricalClasses());
 
         } catch (ExecutionException e) {
             LOG.warn("Error annotating item: " + itemURI, e);
         }
+        LOG.info("Annotation completed for item: " + itemURI);
         return annotatedDocument;
     }
 }

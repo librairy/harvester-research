@@ -1,15 +1,13 @@
 package org.librairy.harvester.research;
 
 import edu.upf.taln.dri.lib.exception.DRIexception;
-import es.cbadenes.lab.test.IntegrationTest;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.junit.runner.RunWith;
-import org.librairy.harvester.research.data.DocumentWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.librairy.harvester.research.data.AnnotatedPaper;
+import org.librairy.harvester.research.processor.DocumentProcessor;
+import org.librairy.harvester.research.processor.GateProcessor;
+import org.librairy.harvester.research.processor.UpfProcessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
@@ -22,28 +20,42 @@ import java.util.concurrent.ExecutionException;
  */
 public class UpfGateProcessorTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DocumentProcessor.class);
+
     @Test
     public void analyzePdf(){
 
         try {
 
-            UpfGateProcessor upfGateProcessor = new UpfGateProcessor();
-
+            GateProcessor gateProcessor = new GateProcessor();
             URL url = this.getClass().getResource("/DRIconfig.properties");
-            upfGateProcessor.setDriConfigPath(new File(url.getFile()));
-            upfGateProcessor.setProxyEnabled(true);
-            upfGateProcessor.setup();
+            gateProcessor.setDriConfigPath(new File(url.getFile()));
+            gateProcessor.setProxyEnabled(true);
+            gateProcessor.setup();
 
-            DocumentWrapper res = upfGateProcessor.process(new File
+
+            UpfProcessor upfProcessor = new UpfProcessor();
+
+
+            DocumentProcessor documentProcessor = new DocumentProcessor();
+            documentProcessor.setGateProcessor(gateProcessor);
+            documentProcessor.setUpfProcessor(upfProcessor);
+            documentProcessor.setup();
+
+
+            AnnotatedPaper document = documentProcessor.process(new File
                     ("src/test/resources/workspace/default/p473-kovar.pdf")
                     .getAbsolutePath());
 
-            System.out.println(res);
+            LOG.info("Annotated Document: " + document.getTitle());
+
 
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (DRIexception drIexception) {
             drIexception.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
     }

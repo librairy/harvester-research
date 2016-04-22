@@ -12,9 +12,9 @@
     <logger name="org.librairy.harvester.file" level="INFO"/>
     <logger name="org.librairy.harvester.research" level="DEBUG"/>
 
-    <logger name="es.upm" level="TRACE"/>
+    <logger name="es.upm" level="INFO"/>
 
-    <root level="INFO">
+    <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

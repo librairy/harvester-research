@@ -1,40 +1,40 @@
 version: "2"
 services:
- ftp:
-   container_name: ftp
-   image: librairy/ftp:1.0
-   restart: always
-   ports:
-     - "5051:21"
-   volumes:
-     - ./data:/home/ftpusers/librairy
+# ftp:
+#   container_name: ftp
+#   image: librairy/ftp:1.0
+#   restart: always
+#   ports:
+#     - "5051:21"
+#   volumes:
+#     - ./data:/home/ftpusers/librairy
  harvester:
    container_name: harvester
    image: librairy/harvester-research:latest
    volumes:
-     - ./data:/librairy/files/uploaded
-   external_links:
-       - column-db
-       - document-db
-       - graph-db
-       - event-bus
-   networks:
-       - "db"
-       - "events"
- #  environment:
- #    - JAVA_OPTS='-Xms8g'
- #    - COLUMN_DB_HOST=wiig.dia.fi.upm.es
- #    - COLUMN_DB_PORT=5011
- #    - DOCUMENT_DB_HOST=wiig.dia.fi.upm.es
- #    - DOCUMENT_DB_PORT=5021
- #    - GRAPH_DB_HOST=wiig.dia.fi.upm.es
- #    - GRAPH_DB_PORT=5030
- #    - MESSAGE_BROKER_HOST=wiig.dia.fi.upm.es
- #    - MESSAGE_BROKER_PORT=5041
-networks:
-  db:
-    external:
-      name: base_db
-  events:
-    external:
-      name: base_events
+       - ./data:/librairy/files
+#   external_links:
+#       - column-db
+#       - document-db
+#       - graph-db
+#       - event-bus
+#   networks:
+#       - "db"
+#       - "events"
+   environment:
+     - JAVA_OPTS='-Xmx100g'
+     - COLUMN_DB_HOST=wiig.dia.fi.upm.es
+     - COLUMN_DB_PORT=5011
+     - DOCUMENT_DB_HOST=wiig.dia.fi.upm.es
+     - DOCUMENT_DB_PORT=5021
+     - GRAPH_DB_HOST=wiig.dia.fi.upm.es
+     - GRAPH_DB_PORT=5030
+     - MESSAGE_BROKER_HOST=wiig.dia.fi.upm.es
+     - MESSAGE_BROKER_PORT=5041
+#networks:
+#  db:
+#    external:
+#      name: base_db
+#  events:
+#    external:
+#      name: base_events

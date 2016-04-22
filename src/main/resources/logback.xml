@@ -24,14 +24,16 @@
         </encoder>
     </appender>
 
-    <logger name="org.librairy" level="INFO"/>
+    <logger name="edu.upf.taln.dri.lib" level="INFO"/>
+
+    <logger name="org.librairy.harvester.file" level="INFO"/>
+    <logger name="org.librairy.harvester.research" level="INFO"/>
 
     <logger name="es.upm" level="INFO"/>
 
-    <logger name="edu.upf.taln.dri" level="WARN"/>
-
-    <root level="ERROR">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
     </root>
+
 </configuration>
