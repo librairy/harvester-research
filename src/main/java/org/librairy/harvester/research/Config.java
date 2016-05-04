@@ -11,8 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  */
 @Configuration("harvester-research")
 @ComponentScan({"org.librairy"})
-@PropertySource({"classpath:harvester.properties","classpath:harvesterResearch.properties","classpath:eventbus" +
-        ".properties"})
+@PropertySource({"classpath:harvester.properties","classpath:harvesterResearch.properties","classpath:boot.properties"})
 public class Config {
 
 
