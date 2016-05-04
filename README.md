@@ -21,7 +21,7 @@ harvester:
   container_name: harvester
   image: librairy/harvester
   volumes:
-    - ./data:/librairy/files/uploaded
+    - ./data:/librairy/files/custom
   links:
       - column-db
       - document-db
@@ -42,12 +42,12 @@ Instead of deploy all containers as a whole, you can deploy each of them indepen
 
 - **FTP Server**:
     ```sh
-    $ docker run -it --rm --name ftp -p 5051:21 -v /Users/cbadenes/Downloads/ftp:/librairy/files/uploaded librairy/ftp:1.0
+    $ docker run -it --rm --name ftp -p 5051:21 -v /Users/cbadenes/Downloads/ftp:/librairy/files/custom librairy/ftp:1.0
     ```
 
 - **Harvester**:
     ```sh
-    $ docker run -it --rm --name harvester -v /Users/cbadenes/Downloads/ftp:/librairy/files/uploaded librairy/harvester
+    $ docker run -it --rm --name harvester -v /Users/cbadenes/Downloads/ftp:/librairy/files/custom librairy/harvester
     ```
 
 Remember that by using the flags: `-it --rm`, the services runs in foreground mode. Instead, you can deploy it in background mode as a domain service by using: `-d --restart=always`

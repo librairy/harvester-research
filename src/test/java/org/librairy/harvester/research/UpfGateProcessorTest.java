@@ -1,7 +1,9 @@
 package org.librairy.harvester.research;
 
 import edu.upf.taln.dri.lib.exception.DRIexception;
+import es.cbadenes.lab.test.IntegrationTest;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.librairy.harvester.research.data.AnnotatedPaper;
 import org.librairy.harvester.research.processor.DocumentProcessor;
 import org.librairy.harvester.research.processor.GateProcessor;
@@ -18,6 +20,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author cbadenes
  */
+@Category(IntegrationTest.class)
 public class UpfGateProcessorTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentProcessor.class);

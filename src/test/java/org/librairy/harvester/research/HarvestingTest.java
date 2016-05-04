@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
         "harvester.input.folder                 = src/test/resources/workspace",
         "harvester.input.folder.default         = src/test/resources/workspace/default",
         "harvester.input.folder.meta            = src/test/resources/workspace/meta",
-        "harvester.input.folder.external        = src/test/resources/workspace/uploaded",
+        "harvester.input.folder.external        = src/test/resources/workspace/custom",
         "harvester.input.folder.hoarder         = src/test/resources/workspace/collected",
         "librairy.cassandra.contactpoints       = wiig.dia.fi.upm.es",
         "librairy.cassandra.port                = 5011",
@@ -48,14 +48,14 @@ public class HarvestingTest {
     @Autowired
     URIGenerator uriGenerator;
     
-    @Test
+//    @Test
     public void run() throws InterruptedException {
         LOG.info("Sleepping...");
         Thread.sleep(12000000);
         LOG.info("Wake Up!");
     }
 
-    @Test
+//    @Test
     public void simulate() throws InterruptedException {
 
         // Reset DDBDD
@@ -81,7 +81,7 @@ public class HarvestingTest {
 //        LOG.info("wake up!");
     }
 
-    @Test
+//    @Test
     public void simulateDocuments() throws InterruptedException {
 
         // Reset DDBDD

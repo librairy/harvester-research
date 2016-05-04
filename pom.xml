@@ -131,7 +131,7 @@
         <thrift.version>0.9.2</thrift.version>
         <tika.version>1.7</tika.version>
         <tudarmstadt.wikipedia.version>1.0.0</tudarmstadt.wikipedia.version>
-        <upf.version>1.2</upf.version>
+        <upf.version>1.4</upf.version>
         <virtuoso.jena.version>1.0</virtuoso.jena.version>
         <virtuoso.jdbc.version>1.0</virtuoso.jdbc.version>
         <wdtk.version>0.4.0</wdtk.version>
@@ -868,12 +868,12 @@
             <version>${upf.version}</version>
             <exclusions>
                 <exclusion>
-                    <groupId>grph</groupId>
-                    <artifactId>grph</artifactId>
-                </exclusion>
-                <exclusion>
                     <groupId>mate.anna.extra</groupId>
                     <artifactId>seg</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>grph</groupId>
+                    <artifactId>grph</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>jtidy</groupId>
