@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.IOError;
+import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -33,7 +35,7 @@ public class GateProcessor {
     File driConfigPath;
 
     @Setter
-    @Value("${librairy.upf.miner.proxy}")
+    @Value("${LIBRAIRY_UPF_PROXY:true}")
     Boolean proxyEnabled;
 
     private LoadingCache<String, AnnotatedPaper> cache;
@@ -88,6 +90,9 @@ public class GateProcessor {
                     break;
             }
             Instant end = Instant.now();
+
+            if (document == null) throw new IOException("Text Mining library error");
+
             LOG.info("File '"+file.getName()+ "' composed successfully as UPF-Gate file in: " + ChronoUnit
                     .MINUTES.between(start,end) + "min " + ChronoUnit.SECONDS
                     .between(start,end) + "secs");
