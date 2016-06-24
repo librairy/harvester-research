@@ -104,7 +104,7 @@ public class GateTest {
             start = System.currentTimeMillis();
             System.out.println(DocParse.getTokenROSasCSVstring(loadedDoc, SentenceSelectorENUM.ALL, DocGraphTypeENUM.DEP));
             System.out.println("********** CSV GENERATED IN: " + (System.currentTimeMillis() - start) + " ms.");
-            System.out.println(DocParse.getCorefROSasCSVstring(loadedDoc, SentenceSelectorENUM.ALL));
+            System.out.println(DocParse.getDocumentROSasCSVstring(loadedDoc, SentenceSelectorENUM.ALL));
             System.out.println("********** CSV GENERATED IN: " + (System.currentTimeMillis() - start) + " ms.");
             System.out.println("\n\n\n*************************\n\n\n");
 
