@@ -1,4 +1,4 @@
-# Harvester  [![Dev Status](https://travis-ci.org/librairy/harvester-file.svg?branch=develop)](https://travis-ci.org/librairy/harvester-file) [![Doc](https://raw.githubusercontent.com/librairy/resources/master/figures/interface.png)](https://rawgit.com/librairy/harvester-file/doc/report/index.html)
+# Harvester 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b57869f0368743969edea71d4692303e)](https://www.codacy.com/app/cbadenes/harvester-research)
 [![Release Status](https://travis-ci.org/librairy/harvester-research.svg?branch=master)](https://travis-ci.org/librairy/harvester-research)
 [![Dev Status](https://travis-ci.org/librairy/harvester-research.svg?branch=master)](https://travis-ci.org/librairy/harvester-research)
