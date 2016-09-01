@@ -14,6 +14,7 @@ WORKDIR /librairy
 #ENV UPF_URL http://backingdata.org/dri/library/1.3/DRIresources-1.3.tar.gz
 
 ADD http://backingdata.org/dri/library/2.0/DRIresources-2.0.tar.gz /librairy/driresources.tar.gz
+#ADD DRIresources-2.0.tar.gz /librairy/driresources.tar.gz
 
 RUN set -x \
 #	&& curl -fSL "$UPF_URL" -o driresources.tar.gz \
@@ -25,17 +26,8 @@ WORKDIR /usr/local/tomcat
 
 ADD harvester.war /usr/local/tomcat/webapps/harvester.war
 
-ENV COLUMN_DB_HOST column-db
-ENV COLUMN_DB_PORT 9042
-
-ENV DOCUMENT_DB_HOST document-db
-ENV DOCUMENT_DB_PORT 9300
-
-ENV GRAPH_DB_HOST graph-db
-ENV GRAPH_DB_PORT 7474
-
-ENV MESSAGE_BROKER_HOST event-bus
-ENV MESSAGE_BROKER_PORT 5672
+ADD waitFor.sh /
+RUN chmod +x /waitFor.sh
 
 ENV JAVA_OPTS='-Xmx16g'
 

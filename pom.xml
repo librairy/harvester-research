@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.librairy</groupId>
-    <artifactId>harvester-research</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <artifactId>librairy-harvester-research</artifactId>
+    <version>0.4</version>
     <packaging>war</packaging>
-    <name>librairy harvester-research</name>
+    <name>harvester-research</name>
     <description>Collect and proccess unstructured research papers.</description>
     <url>https://github.com/librairy/harvester-research</url>
     <organization>
@@ -86,8 +86,7 @@
         <jena.version>2.10.1</jena.version>
         <jgrapht.version>0.9.0</jgrapht.version>
         <junit.version>4.12</junit.version>
-        <librairy.boot.version>0.3</librairy.boot.version>
-        <librairy.harvester.version>0.3</librairy.harvester.version>
+        <librairy.harvester.version>0.4</librairy.harvester.version>
         <log4j.version>1.2.17</log4j.version>
         <log4j.slf4j.version>1.7.14</log4j.slf4j.version>
         <logback.version>1.1.3</logback.version>
@@ -857,7 +856,7 @@
         <!-- Internal Dependencies -->
         <dependency>
             <groupId>org.librairy</groupId>
-            <artifactId>harvester</artifactId>
+            <artifactId>librairy-harvester</artifactId>
             <version>${librairy.harvester.version}</version>
             <classifier>lib</classifier>
         </dependency>
@@ -1143,7 +1142,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.2.3</version>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <imageName>${docker.image.prefix}/${project.name}</imageName>
                     <dockerDirectory>src/main/docker/harvester</dockerDirectory>
                     <resources>
                         <resource>
@@ -1154,6 +1153,7 @@
                     </resources>
                     <imageTags>
                         <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
                     </imageTags>
                 </configuration>
             </plugin>
