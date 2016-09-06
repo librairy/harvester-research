@@ -4,7 +4,7 @@
 
 	<groupId>org.librairy</groupId>
     <artifactId>librairy-harvester-research</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
     <packaging>war</packaging>
     <name>harvester-research</name>
     <description>Collect and proccess unstructured research papers.</description>
@@ -86,7 +86,7 @@
         <jena.version>2.10.1</jena.version>
         <jgrapht.version>0.9.0</jgrapht.version>
         <junit.version>4.12</junit.version>
-        <librairy.harvester.version>0.6</librairy.harvester.version>
+        <librairy.harvester.version>0.7</librairy.harvester.version>
         <log4j.version>1.2.17</log4j.version>
         <log4j.slf4j.version>1.7.14</log4j.slf4j.version>
         <logback.version>1.1.3</logback.version>
@@ -869,7 +869,7 @@
             <version>${librairy.harvester.version}</version>
             <classifier>lib</classifier>
         </dependency>
-		
+
         <!-- UPF Text Mining -->
         <dependency>
             <groupId>edu.upf.taln.dri</groupId>
@@ -993,10 +993,29 @@
                 </configuration>
             </plugin>
 
+            <!-- Github Deploy -->
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.8.1</version>
+                <executions>
+                    <execution>
+                        <id>lib-deploy</id>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                        <configuration>
+                            <file>${project.build.directory}/${project.build.finalName}-lib.jar</file>
+                            <repositoryId>internal.repo::default::file://${project.build.directory}/mvn-repo</repositoryId>
+                            <url>file://${project.build.directory}/mvn-repo</url>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}</artifactId>
+                            <version>${project.version}</version>
+                        </configuration>
+                    </execution>
+                </executions>
                 <configuration>
+                    <skip>true</skip>
                     <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
                 </configuration>
             </plugin>
@@ -1152,6 +1171,7 @@
                 <version>0.4.11</version>
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.name}</imageName>
+                    <serverId>dockerhub</serverId>
                     <dockerDirectory>src/main/docker/harvester</dockerDirectory>
                     <resources>
                         <resource>
@@ -1210,8 +1230,16 @@
 
         <!-- Librairy Repository -->
         <repository>
-            <id>librairy-mvn-repo</id>
+            <id>boot-mvn-repo</id>
             <url>https://raw.github.com/librairy/boot/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>harvester-mvn-repo</id>
+            <url>https://raw.github.com/librairy/harvester/mvn-repo/</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -1322,4 +1350,3 @@
 
 
 </project>
-
