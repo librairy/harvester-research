@@ -4,7 +4,7 @@
 
 	<groupId>org.librairy</groupId>
     <artifactId>librairy-harvester-research</artifactId>
-    <version>0.11</version>
+    <version>0.12-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>harvester-research</name>
     <description>Collect and proccess unstructured research papers.</description>
