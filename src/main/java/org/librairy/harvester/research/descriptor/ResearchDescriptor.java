@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author cbadenes
  */
-@Component
+//@Component("ResearchDescriptor")
 public class ResearchDescriptor implements Descriptor{
 
     private static final Logger LOG = LoggerFactory.getLogger(ResearchDescriptor.class);

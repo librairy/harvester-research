@@ -93,7 +93,8 @@
         <jena.version>2.10.1</jena.version>
         <jgrapht.version>0.9.0</jgrapht.version>
         <junit.version>4.12</junit.version>
-        <librairy.harvester.version>0.11</librairy.harvester.version>
+        <librairy.boot.version>0.30</librairy.boot.version>
+        <librairy.harvester.version>0.11</librairy.harvester.version><!--0.11-->
         <log4j.version>1.2.17</log4j.version>
         <log4j.slf4j.version>1.7.14</log4j.slf4j.version>
         <logback.version>1.1.3</logback.version>
@@ -150,12 +151,26 @@
         <dependencies>
 
             <!-- librairy boot dependencyManagement -->
+            <!--<dependency>-->
+                <!--<groupId>org.librairy</groupId>-->
+                <!--<artifactId>librairy-harvester</artifactId>-->
+                <!--<version>${librairy.harvester.version}</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+
             <dependency>
                 <groupId>org.librairy</groupId>
-                <artifactId>librairy-harvester</artifactId>
-                <version>${librairy.harvester.version}</version>
+                <artifactId>librairy-boot</artifactId>
+                <version>${librairy.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.librairy</groupId>
+                <artifactId>librairy-boot</artifactId>
+                <version>${librairy.boot.version}</version>
             </dependency>
 
             <!-- Camel Workflow Libraries -->
@@ -225,68 +240,68 @@
                 <version>${camel.version}</version>
             </dependency>
 
-            <!-- Cassandra Libraries -->
-            <dependency>
-                <groupId>org.hectorclient</groupId>
-                <artifactId>hector-core</artifactId>
-                <version>${hector.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-cassandra</artifactId>
-                <version>${spring.data.cassandra.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.xerial.snappy</groupId>
-                <artifactId>snappy-java</artifactId>
-                <version>${snappy.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.jpountz.lz4</groupId>
-                <artifactId>lz4</artifactId>
-                <version>${lz4.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Cassandra Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.hectorclient</groupId>-->
+                <!--<artifactId>hector-core</artifactId>-->
+                <!--<version>${hector.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-cassandra</artifactId>-->
+                <!--<version>${spring.data.cassandra.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.xerial.snappy</groupId>-->
+                <!--<artifactId>snappy-java</artifactId>-->
+                <!--<version>${snappy.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>net.jpountz.lz4</groupId>-->
+                <!--<artifactId>lz4</artifactId>-->
+                <!--<version>${lz4.version}</version>-->
+            <!--</dependency>-->
 
-            <!-- Elasticsearch Libraries -->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-elasticsearch</artifactId>
-                <version>${spring.data.elasticsearch.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Elasticsearch Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-elasticsearch</artifactId>-->
+                <!--<version>${spring.data.elasticsearch.version}</version>-->
+            <!--</dependency>-->
 
-            <!-- Graph Libraries -->
-            <dependency>
-                <groupId>org.jgrapht</groupId>
-                <artifactId>jgrapht-core</artifactId>
-                <version>${jgrapht.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-neo4j</artifactId>
-                <version>${spring.data.neo4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.neo4j</groupId>
-                <artifactId>neo4j-ogm-api</artifactId>
-                <version>${spring.data.neo4j.ogm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.neo4j</groupId>
-                <artifactId>neo4j-ogm-core</artifactId>
-                <version>${spring.data.neo4j.ogm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.neo4j</groupId>
-                <artifactId>neo4j-ogm-http-driver</artifactId>
-                <version>${spring.data.neo4j.ogm.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Graph Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.jgrapht</groupId>-->
+                <!--<artifactId>jgrapht-core</artifactId>-->
+                <!--<version>${jgrapht.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-neo4j</artifactId>-->
+                <!--<version>${spring.data.neo4j.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.neo4j</groupId>-->
+                <!--<artifactId>neo4j-ogm-api</artifactId>-->
+                <!--<version>${spring.data.neo4j.ogm.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.neo4j</groupId>-->
+                <!--<artifactId>neo4j-ogm-core</artifactId>-->
+                <!--<version>${spring.data.neo4j.ogm.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.neo4j</groupId>-->
+                <!--<artifactId>neo4j-ogm-http-driver</artifactId>-->
+                <!--<version>${spring.data.neo4j.ogm.version}</version>-->
+            <!--</dependency>-->
 
-            <!-- In-Memory DB Libraries -->
-            <dependency>
-                <groupId>org.mapdb</groupId>
-                <artifactId>mapdb</artifactId>
-                <version>${mapdb.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; In-Memory DB Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.mapdb</groupId>-->
+                <!--<artifactId>mapdb</artifactId>-->
+                <!--<version>${mapdb.version}</version>-->
+            <!--</dependency>-->
 
             <!-- Json Serializers -->
             <dependency>
@@ -320,32 +335,32 @@
                 <version>${fasterxml.jackson.version}</version>
             </dependency>
 
-            <!-- Log Libraries -->
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-                <version>${log4j.slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Log Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>log4j</groupId>-->
+                <!--<artifactId>log4j</artifactId>-->
+                <!--<version>${log4j.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.slf4j</groupId>-->
+                <!--<artifactId>slf4j-log4j12</artifactId>-->
+                <!--<version>${slf4j.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.slf4j</groupId>-->
+                <!--<artifactId>log4j-over-slf4j</artifactId>-->
+                <!--<version>${log4j.slf4j.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>ch.qos.logback</groupId>-->
+                <!--<artifactId>logback-classic</artifactId>-->
+                <!--<version>${logback.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>ch.qos.logback</groupId>-->
+                <!--<artifactId>logback-core</artifactId>-->
+                <!--<version>${logback.version}</version>-->
+            <!--</dependency>-->
 
             <!-- Lucene Libraries -->
             <dependency>
@@ -381,12 +396,12 @@
                 <version>${ressist.version}</version>
             </dependency>
 
-            <!-- Message Broker Libraries -->
-            <dependency>
-                <groupId>com.rabbitmq</groupId>
-                <artifactId>amqp-client</artifactId>
-                <version>${rabbitmq.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Message Broker Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>com.rabbitmq</groupId>-->
+                <!--<artifactId>amqp-client</artifactId>-->
+                <!--<version>${rabbitmq.version}</version>-->
+            <!--</dependency>-->
 
             <!-- Meta Programming Libraries -->
             <dependency>
@@ -442,11 +457,7 @@
 
             <!-- Networking Libraries -->
 
-            <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>${httpclient.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>javax.annotation</groupId>
                 <artifactId>jsr250-api</artifactId>
@@ -488,21 +499,21 @@
                 <artifactId>libthrift</artifactId>
                 <version>${thrift.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpcore</artifactId>
-                <version>${httpcomponents.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>${httpcomponents.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpmime</artifactId>
-                <version>${httpcomponents.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.apache.httpcomponents</groupId>-->
+                <!--<artifactId>httpcore</artifactId>-->
+                <!--<version>${httpcomponents.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.httpcomponents</groupId>-->
+                <!--<artifactId>httpclient</artifactId>-->
+                <!--<version>${httpcomponents.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.httpcomponents</groupId>-->
+                <!--<artifactId>httpmime</artifactId>-->
+                <!--<version>${httpcomponents.version}</version>-->
+            <!--</dependency>-->
 
             <!-- NLP Libraries -->
             <dependency>
@@ -571,6 +582,12 @@
                 <classifier>models</classifier>
             </dependency>
             <dependency>
+                <groupId>edu.stanford.nlp</groupId>
+                <artifactId>stanford-corenlp</artifactId>
+                <version>${stanford.version}</version>
+                <classifier>models-spanish</classifier>
+            </dependency>
+            <dependency>
                 <groupId>intoxicant.analytics</groupId>
                 <artifactId>coreNlpExtensions</artifactId>
                 <version>${coreNlpExtensions.version}</version>
@@ -624,69 +641,69 @@
                 <version>${solr.version}</version>
             </dependency>
 
-            <!-- Spark Libraries -->
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-core_2.11</artifactId>
-                <version>${spark.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-core_2.10</artifactId>
-                <version>${spark.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Spark Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.spark</groupId>-->
+                <!--<artifactId>spark-core_2.11</artifactId>-->
+                <!--<version>${spark.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.apache.spark</groupId>-->
+                <!--<artifactId>spark-core_2.10</artifactId>-->
+                <!--<version>${spark.version}</version>-->
+            <!--</dependency>-->
 
-            <!-- Spring Libraries -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-expression</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-amqp</artifactId>
-                <version>${springboot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-logging</artifactId>
-                <version>${springboot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-jpa</artifactId>
-                <version>${spring.data.jpa.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-commons</artifactId>
-                <version>${spring.data.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
+            <!--&lt;!&ndash; Spring Libraries &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-web</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-context</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-expression</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-webmvc</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-starter-amqp</artifactId>-->
+                <!--<version>${springboot.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-starter-logging</artifactId>-->
+                <!--<version>${springboot.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-test</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-jpa</artifactId>-->
+                <!--<version>${spring.data.jpa.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-commons</artifactId>-->
+                <!--<version>${spring.data.commons.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>org.springframework</groupId>-->
+                <!--<artifactId>spring-aop</artifactId>-->
+                <!--<version>${spring.version}</version>-->
+            <!--</dependency>-->
 
             <!-- Tomcat Libraries -->
             <dependency>
@@ -912,6 +929,66 @@
                     <artifactId>slf4j-log4j12</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- Extra Dependencies -->
+        <!--<dependency>-->
+            <!--<groupId>org.projectlombok</groupId>-->
+            <!--<artifactId>lombok</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.google.guava</groupId>-->
+            <!--<artifactId>guava</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-context</artifactId>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>org.librairy</groupId>
+            <artifactId>librairy-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-highlighter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-parser</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <classifier>models</classifier>
+        </dependency>
+        <dependency>
+            <groupId>edu.stanford.nlp</groupId>
+            <artifactId>stanford-corenlp</artifactId>
+            <classifier>models-spanish</classifier>
+        </dependency>
+        <dependency>
+            <groupId>intoxicant.analytics</groupId>
+            <artifactId>coreNlpExtensions</artifactId>
         </dependency>
 
         <!-- Unit tests -->

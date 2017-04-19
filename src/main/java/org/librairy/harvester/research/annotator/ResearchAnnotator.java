@@ -27,7 +27,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author cbadenes
  */
-@Component
+//@Component
 public class ResearchAnnotator implements Annotator{
 
     private static final Logger LOG = LoggerFactory.getLogger(ResearchAnnotator.class);

@@ -9,6 +9,7 @@ package org.librairy.harvester.research.processor;
 
 import com.google.common.collect.Lists;
 import edu.upf.taln.dri.lib.model.Document;
+import edu.upf.taln.dri.lib.model.DocumentImpl;
 import edu.upf.taln.dri.lib.model.ext.*;
 import org.librairy.harvester.research.data.AnnotatedPaper;
 import org.librairy.harvester.research.data.AuthorWrapper;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
  *
  * @author cbadenes
  */
-@Component
+//@Component
 public class UpfProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(UpfProcessor.class);
@@ -40,7 +41,21 @@ public class UpfProcessor {
 
         try {
             //Pre-load elements
-            document.preprocess();
+            ((DocumentImpl) document).resetDocumentExtractionData();
+            ((DocumentImpl) document).parsingSentences(false);
+//            document.parsingCitations_Spot(false);
+//            document.parsingCitations_Link(false);
+//            document.parsingCitations_Enrich(false);
+            ((DocumentImpl) document).parsingHeader(false);
+            ((DocumentImpl) document).parsingDep(false);
+//            document.parsingCoref(false);
+//            document.parsingCausality(false);
+//            document.parsingTerminology(false);
+//            document.parsingRhetoricalClass(false);
+//            document.parsingBabelNet(false);
+
+            // PreProcess
+//            document.preprocess();
 
             // Content
             annotatedPaper.setContent(document.getRawText());
@@ -72,45 +87,45 @@ public class UpfProcessor {
             List<Sentence> abstractSentences = document.extractSentences(SentenceSelectorENUM.ONLY_ABSTRACT);
             annotatedPaper.addSection("abstract",_join(abstractSentences));
 
-            // Rhetorical Classes
-            List<Sentence> sentences = document.extractSentences(SentenceSelectorENUM.ALL);
-
-            // -> approach
-            List<Sentence> approachSentences = sentences.stream().filter(s -> s.getRhetoricalClass
-                    ().equals(RhetoricalClassENUM.DRI_Approach)).collect(Collectors.toList());
-//            annotatedPaper.addRhetoricalClass("approach",_join(approachSentences));
-
-            // -> background
-            List<Sentence> backgroundSentences = sentences.stream().filter(s -> s.getRhetoricalClass
-                    ().equals(RhetoricalClassENUM.DRI_Background)).collect(Collectors.toList());
-//            annotatedPaper.addRhetoricalClass("background",_join(backgroundSentences));
-
-            // -> outcome
-            List<Sentence> outcomeSentences = sentences.stream().filter(s -> s.getRhetoricalClass
-                    ().equals(RhetoricalClassENUM.DRI_Outcome)).collect(Collectors.toList());
-            annotatedPaper.addRhetoricalClass("outcome",_join(outcomeSentences));
-
-            // -> futureWork
-            List<Sentence> futureSentences = sentences.stream().filter(s -> s.getRhetoricalClass
-                    ().equals(RhetoricalClassENUM.DRI_FutureWork)).collect(Collectors.toList());
-            annotatedPaper.addRhetoricalClass("futureWork",_join(futureSentences));
-
-            // -> challenge
-            List<Sentence> challengeSentences = sentences.stream().filter(s -> s.getRhetoricalClass
-                    ().equals(RhetoricalClassENUM.DRI_Challenge)).collect(Collectors.toList());
-            annotatedPaper.addRhetoricalClass("challenge",_join(challengeSentences));
-
-            // -> Abstract and Background
-            List<Sentence> abstractBackgroundSentences = new ArrayList<Sentence>();
-            abstractBackgroundSentences.addAll(abstractSentences);
-            abstractBackgroundSentences.addAll(backgroundSentences);
-            annotatedPaper.addRhetoricalClass("abstract-background",_join(abstractBackgroundSentences));
-
-            // -> Abstract and Approach
-            List<Sentence> abstractApproachSentences = new ArrayList<Sentence>();
-            abstractApproachSentences.addAll(abstractSentences);
-            abstractApproachSentences.addAll(approachSentences);
-            annotatedPaper.addRhetoricalClass("abstract-approach",_join(abstractApproachSentences));
+//            // Rhetorical Classes
+//            List<Sentence> sentences = document.extractSentences(SentenceSelectorENUM.ALL);
+//
+//            // -> approach
+//            List<Sentence> approachSentences = sentences.stream().filter(s -> s.getRhetoricalClass
+//                    ().equals(RhetoricalClassENUM.DRI_Approach)).collect(Collectors.toList());
+////            annotatedPaper.addRhetoricalClass("approach",_join(approachSentences));
+//
+//            // -> background
+//            List<Sentence> backgroundSentences = sentences.stream().filter(s -> s.getRhetoricalClass
+//                    ().equals(RhetoricalClassENUM.DRI_Background)).collect(Collectors.toList());
+////            annotatedPaper.addRhetoricalClass("background",_join(backgroundSentences));
+//
+//            // -> outcome
+//            List<Sentence> outcomeSentences = sentences.stream().filter(s -> s.getRhetoricalClass
+//                    ().equals(RhetoricalClassENUM.DRI_Outcome)).collect(Collectors.toList());
+//            annotatedPaper.addRhetoricalClass("outcome",_join(outcomeSentences));
+//
+//            // -> futureWork
+//            List<Sentence> futureSentences = sentences.stream().filter(s -> s.getRhetoricalClass
+//                    ().equals(RhetoricalClassENUM.DRI_FutureWork)).collect(Collectors.toList());
+//            annotatedPaper.addRhetoricalClass("futureWork",_join(futureSentences));
+//
+//            // -> challenge
+//            List<Sentence> challengeSentences = sentences.stream().filter(s -> s.getRhetoricalClass
+//                    ().equals(RhetoricalClassENUM.DRI_Challenge)).collect(Collectors.toList());
+//            annotatedPaper.addRhetoricalClass("challenge",_join(challengeSentences));
+//
+//            // -> Abstract and Background
+//            List<Sentence> abstractBackgroundSentences = new ArrayList<Sentence>();
+//            abstractBackgroundSentences.addAll(abstractSentences);
+//            abstractBackgroundSentences.addAll(backgroundSentences);
+//            annotatedPaper.addRhetoricalClass("abstract-background",_join(abstractBackgroundSentences));
+//
+//            // -> Abstract and Approach
+//            List<Sentence> abstractApproachSentences = new ArrayList<Sentence>();
+//            abstractApproachSentences.addAll(abstractSentences);
+//            abstractApproachSentences.addAll(approachSentences);
+//            annotatedPaper.addRhetoricalClass("abstract-approach",_join(abstractApproachSentences));
 
             // Terms
             annotatedPaper.setTerms(document.extractTerminology().stream().map(t -> t.getText()).collect(Collectors

@@ -32,7 +32,7 @@ import java.time.temporal.ChronoUnit;
  *
  * @author cbadenes
  */
-@Component
+//@Component
 public class GateProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(GateProcessor.class);

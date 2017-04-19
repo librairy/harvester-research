@@ -24,7 +24,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author cbadenes
  */
-@Component
+//@Component
 public class ResearchParser implements Parser{
 
     private static final Logger LOG = LoggerFactory.getLogger(ResearchParser.class);

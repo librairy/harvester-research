@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author cbadenes
  */
-@Component
+//@Component
 public class DocumentProcessor {
 
     private static final Logger LOG = LoggerFactory.getLogger(DocumentProcessor.class);
