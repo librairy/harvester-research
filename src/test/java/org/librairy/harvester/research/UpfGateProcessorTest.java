@@ -61,43 +61,43 @@ public class UpfGateProcessorTest {
 
     Integer totalSize = 0;
 
-    @Test
-    public void analyzePdf(){
-
-        try {
-
-            GateProcessor gateProcessor = new GateProcessor();
-            URL url = this.getClass().getResource("/DRIconfig.properties");
-            gateProcessor.setDriConfigPath(new File(url.getFile()));
-            gateProcessor.setProxyEnabled(true);
-            gateProcessor.setup();
-
-
-            UpfProcessor upfProcessor = new UpfProcessor();
-
-
-            DocumentProcessor documentProcessor = new DocumentProcessor();
-            documentProcessor.setGateProcessor(gateProcessor);
-            documentProcessor.setUpfProcessor(upfProcessor);
-            documentProcessor.setup();
-
-
-            AnnotatedPaper document = documentProcessor.process(new File
-                    ("src/test/resources/workspace/default/p473-kovar.pdf")
-                    .getAbsolutePath());
-
-            LOG.info("Annotated Document: " + document.getTitle());
-
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (DRIexception drIexception) {
-            drIexception.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
+//    @Test
+//    public void analyzePdf(){
+//
+//        try {
+//
+//            GateProcessor gateProcessor = new GateProcessor();
+//            URL url = this.getClass().getResource("/DRIconfig.properties");
+//            gateProcessor.setDriConfigPath(new File(url.getFile()));
+//            gateProcessor.setProxyEnabled(true);
+//            gateProcessor.setup();
+//
+//
+//            UpfProcessor upfProcessor = new UpfProcessor();
+//
+//
+//            DocumentProcessor documentProcessor = new DocumentProcessor();
+//            documentProcessor.setGateProcessor(gateProcessor);
+//            documentProcessor.setUpfProcessor(upfProcessor);
+//            documentProcessor.setup();
+//
+//
+//            AnnotatedPaper document = documentProcessor.process(new File
+//                    ("src/test/resources/workspace/default/p473-kovar.pdf")
+//                    .getAbsolutePath());
+//
+//            LOG.info("Annotated Document: " + document.getTitle());
+//
+//
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (DRIexception drIexception) {
+//            drIexception.printStackTrace();
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     public void parse(UpfProcessor processor, String uri){
 
@@ -112,15 +112,18 @@ public class UpfGateProcessorTest {
 
                 Document document = result.get().asDocument();
 
-                edu.upf.taln.dri.lib.model.Document gateDoc = Factory.getPDFloader().parsePDF(new URL(document.getRetrievedFrom()));
-                AnnotatedPaper annotatedDoc = processor.process(gateDoc);
+                if (Strings.isNullOrEmpty(document.getDescription())){
+                    edu.upf.taln.dri.lib.model.Document gateDoc = Factory.getPDFloader().parsePDF(new URL(document.getRetrievedFrom()));
+                    AnnotatedPaper annotatedDoc = processor.process(gateDoc);
 
-                if (!Strings.isNullOrEmpty(annotatedDoc.getTitle())) document.setTitle(annotatedDoc.getTitle());
+                    if (!Strings.isNullOrEmpty(annotatedDoc.getTitle())) document.setTitle(annotatedDoc.getTitle());
 
-                String abstractContent = annotatedDoc.getSections().get("abstract");
-                if (!Strings.isNullOrEmpty(abstractContent)) document.setDescription(abstractContent);
+                    String abstractContent = annotatedDoc.getSections().get("abstract");
+                    if (!Strings.isNullOrEmpty(abstractContent)) document.setDescription(abstractContent);
 
-                udm.save(document);
+                    udm.save(document);
+                }
+
             }
 
         } catch (DRIexception drIexception) {
@@ -135,6 +138,8 @@ public class UpfGateProcessorTest {
     public void annotateDocuments(){
 
         try {
+            System.out.println("starting test");
+            LOG.info("Preparing Gate processor...");
             GateProcessor gateProcessor = new GateProcessor();
             URL url = this.getClass().getResource("/DRIconfig.properties");
             gateProcessor.setDriConfigPath(new File(url.getFile()));
@@ -143,10 +148,10 @@ public class UpfGateProcessorTest {
             UpfProcessor upfProcessor = new UpfProcessor();
 
 
-            DocumentProcessor documentProcessor = new DocumentProcessor();
-            documentProcessor.setGateProcessor(gateProcessor);
-            documentProcessor.setUpfProcessor(upfProcessor);
-            documentProcessor.setup();
+//            DocumentProcessor documentProcessor = new DocumentProcessor();
+//            documentProcessor.setGateProcessor(gateProcessor);
+//            documentProcessor.setUpfProcessor(upfProcessor);
+//            documentProcessor.setup();
 
             // Documents
             List<Resource> documents = udm.find(Resource.Type.DOCUMENT).all();
@@ -155,7 +160,7 @@ public class UpfGateProcessorTest {
 
             documents.parallelStream().forEach( resource -> parse(upfProcessor, resource.getUri()));
 
-            LOG.info("Operation Completed Succesfully!!");
+            LOG.info("Operation Completed Successfully!!");
 
         } catch (DRIexception drIexception) {
             drIexception.printStackTrace();

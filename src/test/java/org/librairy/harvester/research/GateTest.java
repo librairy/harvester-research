@@ -10,7 +10,6 @@ package org.librairy.harvester.research;
 import edu.upf.taln.dri.lib.Factory;
 import edu.upf.taln.dri.lib.exception.DRIexception;
 import edu.upf.taln.dri.lib.exception.InternalProcessingException;
-import edu.upf.taln.dri.lib.loader.PDFloaderImpl;
 import edu.upf.taln.dri.lib.model.DocumentImpl;
 import edu.upf.taln.dri.lib.model.ext.Sentence;
 import edu.upf.taln.dri.lib.model.ext.SentenceSelectorENUM;
@@ -39,8 +38,8 @@ public class GateTest {
         // Property file path
         URL url = this.getClass().getResource("/DRIconfig.properties");
         Factory.setDRIPropertyFilePath(url.getPath());
-        Factory.setEnableBibEntryParsing(false);
-        PDFloaderImpl.PDFXproxyEnabled = true;
+//        Factory.setEnableBibEntryParsing(false);
+//        PDFloaderImpl.PDFXproxyEnabled = true;
 
         // Loading a paper from a locally stored PDF file at the path: /my/file/path/PDF_file_name.pdf and get the Dr. Inventor Document instance
         String paperFileName = "p473-kovar.pdf"; // paper_45.pdf

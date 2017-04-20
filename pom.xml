@@ -139,7 +139,7 @@
         <thrift.version>0.9.2</thrift.version>
         <tika.version>1.7</tika.version>
         <tudarmstadt.wikipedia.version>1.0.0</tudarmstadt.wikipedia.version>
-        <upf.version>2.0</upf.version> <!-- 1.4 -->
+        <upf.version>3.1</upf.version> <!-- 2.0 -->
         <virtuoso.jena.version>1.0</virtuoso.jena.version>
         <virtuoso.jdbc.version>1.0</virtuoso.jdbc.version>
         <wdtk.version>0.4.0</wdtk.version>

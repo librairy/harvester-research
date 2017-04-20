@@ -11,18 +11,17 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.io.Files;
 import edu.upf.taln.dri.lib.Factory;
 import edu.upf.taln.dri.lib.exception.DRIexception;
-import edu.upf.taln.dri.lib.loader.PDFloaderImpl;
 import edu.upf.taln.dri.lib.model.Document;
+import edu.upf.taln.dri.lib.util.ModuleConfig;
+import edu.upf.taln.dri.lib.util.PDFtoTextConvMethod;
 import lombok.Setter;
 import org.librairy.harvester.research.data.AnnotatedPaper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.io.IOError;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -52,15 +51,57 @@ public class GateProcessor {
 
         LOG.info("Initializing UPF Text Mining Framework from: " + driConfigPath + " ..");
 
+
+
+
         // Enable the PDFX proxy service
         //PDFloaderImpl.PDFXproxyEnabled = true;
-        PDFloaderImpl.PDFXproxyEnabled = proxyEnabled;
+//        PDFloaderImpl.PDFXproxyEnabled = proxyEnabled;
 
         // Set property file path
         Factory.setDRIPropertyFilePath(driConfigPath.getAbsolutePath());
 
         // Enable bibliography entry parsing
-        Factory.setEnableBibEntryParsing(false);
+//        Factory.setEnableBibEntryParsing(false);
+
+        // -> New Section
+        // To use PDFX:
+//        Factory.setPDFtoTextConverter(PDFtoTextConvMethod.PDFX);
+
+        // To use GROBID:
+        Factory.setPDFtoTextConverter(PDFtoTextConvMethod.GROBID);
+
+        // Instantiate the ModuleConfig class - the constructor sets all modules enabled by default
+        ModuleConfig modConfigurationObj = new ModuleConfig();
+
+        // Enable the parsing of bibliographic entries by means of online services (Bibsonomy, CrossRef, FreeCite, etc.)
+        modConfigurationObj.setEnableBibEntryParsing(false);
+
+        // Enable BabelNet Word Sense Disambiguation and Entity Linking over the text of the paper
+        modConfigurationObj.setEnableBabelNetParsing(false);
+
+        // Enable the parsing of the information from the header of the paper by means of online services (Bibsonomy, CrossRef, FreeCite, etc.)
+        modConfigurationObj.setEnableHeaderParsing(true);
+
+        // Enable the extraction of candidate terms from the sentences of the paper
+        modConfigurationObj.setEnableTerminologyParsing(false);
+
+        // Enable the dependency parsing of the sentences of a paper
+        modConfigurationObj.setEnableGraphParsing(true);
+
+        // Enable coreference resolution
+        modConfigurationObj.setEnableCoreferenceResolution(false);
+
+        // Enable the extraction of causal relations
+        modConfigurationObj.setEnableCausalityParsing(true);
+
+        // Enable the association of a rhetorical category to the sentences of the paper
+        modConfigurationObj.setEnableRhetoricalClassification(true);
+
+        // Import the configuration parameters set in the ModuleConfig instance
+        Factory.setModuleConfig(modConfigurationObj);
+
+        // -> New Section
 
         // Initialize
         Factory.initFramework();

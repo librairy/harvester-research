@@ -16,7 +16,7 @@
 
     <logger name="edu.upf.taln.dri.lib" level="ERROR"/>
 
-    <logger name="org.librairy.harvester.file" level="INFO"/>
+    <logger name="org.librairy" level="INFO"/>
     <logger name="org.librairy.harvester.research" level="DEBUG"/>
 
     <logger name="es.upm" level="INFO"/>
