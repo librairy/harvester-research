@@ -53,7 +53,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 })
 public class UpfGateProcessorTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DocumentProcessor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UpfGateProcessorTest.class);
 
     @Autowired
     UDM udm;
