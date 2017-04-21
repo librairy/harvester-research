@@ -11,6 +11,7 @@ import com.google.common.base.Strings;
 import edu.upf.taln.dri.lib.Factory;
 import edu.upf.taln.dri.lib.exception.DRIexception;
 import es.cbadenes.lab.test.IntegrationTest;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
@@ -112,14 +113,24 @@ public class UpfGateProcessorTest {
 
                 Document document = result.get().asDocument();
 
-                if (Strings.isNullOrEmpty(document.getDescription())){
+                if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
                     edu.upf.taln.dri.lib.model.Document gateDoc = Factory.getPDFloader().parsePDF(new URL(document.getRetrievedFrom()));
                     AnnotatedPaper annotatedDoc = processor.process(gateDoc);
 
                     if (!Strings.isNullOrEmpty(annotatedDoc.getTitle())) document.setTitle(annotatedDoc.getTitle());
 
                     String abstractContent = annotatedDoc.getSections().get("abstract");
-                    if (!Strings.isNullOrEmpty(abstractContent)) document.setDescription(abstractContent);
+                    if (!Strings.isNullOrEmpty(abstractContent))
+                        document.setDescription(abstractContent);
+                    else document.setDescription(annotatedDoc.getSummary());
+
+
+                    String authors = annotatedDoc.getAuthors();
+                    if (!Strings.isNullOrEmpty(authors))
+                        document.setAuthoredBy(authors);
+                    else if (Strings.isNullOrEmpty(document.getAuthoredBy())){
+                        document.setAuthoredBy("unknown");
+                    }
 
                     udm.save(document);
                 }
@@ -169,6 +180,33 @@ public class UpfGateProcessorTest {
 
 
 
+
+
+    }
+
+    @Test
+    public void evaluateDocuments(){
+
+        // Documents
+        List<Resource> documents = udm.find(Resource.Type.DOCUMENT).all();
+        totalSize = documents.size();
+        LOG.info(documents.size() + " documents");
+
+        AtomicInteger counter = new AtomicInteger(0);
+        documents.parallelStream().forEach( resource -> {
+
+            Optional<Resource> doc = udm.read(Resource.Type.DOCUMENT).byUri(resource.getUri());
+
+            if (doc.isPresent() && !Strings.isNullOrEmpty(doc.get().asDocument().getDescription())){
+                counter.getAndIncrement();
+                String uri = resource.getUri();
+                LOG.info("Document: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
+            }
+
+        });
+
+
+        LOG.info(counter.get() + " of " + totalSize + " are processed");
 
 
     }

@@ -1,15 +1,2 @@
-20 Apr 2017 11:44.08 [INFO ] plugins                   - [Patriot] loaded [], sites []
-20 Apr 2017 11:44.10 [INFO ] Factory                   - Module configuration set to: ModuleConfig [enableBibEntryParsing=false, enableHeaderParsing=true, enableBabelNetParsing=false, enableTerminologyParsing=false, enableGraphParsing=true, enableRhetoricalClassification=true, enableCoreferenceResolution=false, enableCausalityParsing=true]
-20 Apr 2017 11:44.10 [INFO ] Factory                   - INIT: checking if the Dr. Inventor Scientific Text Mining Java Library is initialized...
-20 Apr 2017 20:04.42 [INFO ] plugins                   - [Alexander Lexington] loaded [], sites []
-20 Apr 2017 20:04.45 [INFO ] Factory                   - Module configuration set to: ModuleConfig [enableBibEntryParsing=false, enableHeaderParsing=true, enableBabelNetParsing=false, enableTerminologyParsing=false, enableGraphParsing=true, enableRhetoricalClassification=true, enableCoreferenceResolution=false, enableCausalityParsing=true]
-20 Apr 2017 20:04.45 [INFO ] Factory                   - INIT: checking if the Dr. Inventor Scientific Text Mining Java Library is initialized...
-20 Apr 2017 20:07.52 [INFO ] plugins                   - [Samuel Guthrie] loaded [], sites []
-20 Apr 2017 20:07.54 [INFO ] Factory                   - Module configuration set to: ModuleConfig [enableBibEntryParsing=false, enableHeaderParsing=true, enableBabelNetParsing=false, enableTerminologyParsing=false, enableGraphParsing=true, enableRhetoricalClassification=true, enableCoreferenceResolution=false, enableCausalityParsing=true]
-20 Apr 2017 20:07.54 [INFO ] Factory                   - INIT: checking if the Dr. Inventor Scientific Text Mining Java Library is initialized...
-20 Apr 2017 20:10.11 [INFO ] plugins                   - [Madison Jeffries] loaded [], sites []
-20 Apr 2017 20:10.14 [INFO ] Factory                   - Module configuration set to: ModuleConfig [enableBibEntryParsing=false, enableHeaderParsing=true, enableBabelNetParsing=false, enableTerminologyParsing=false, enableGraphParsing=true, enableRhetoricalClassification=true, enableCoreferenceResolution=false, enableCausalityParsing=true]
-20 Apr 2017 20:10.14 [INFO ] Factory                   - INIT: checking if the Dr. Inventor Scientific Text Mining Java Library is initialized...
-20 Apr 2017 22:03.31 [INFO ] plugins                   - [Husk] loaded [], sites []
-20 Apr 2017 22:03.33 [INFO ] Factory                   - Module configuration set to: ModuleConfig [enableBibEntryParsing=false, enableHeaderParsing=true, enableBabelNetParsing=false, enableTerminologyParsing=false, enableGraphParsing=true, enableRhetoricalClassification=true, enableCoreferenceResolution=false, enableCausalityParsing=true]
-20 Apr 2017 22:03.33 [INFO ] Factory                   - INIT: checking if the Dr. Inventor Scientific Text Mining Java Library is initialized...
+21 Apr 2017 11:57.01 [INFO ] plugins                   - [Bible John] loaded [], sites []
+21 Apr 2017 11:59.12 [INFO ] plugins                   - [Fashima] loaded [], sites []
