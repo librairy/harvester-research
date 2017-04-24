@@ -117,8 +117,7 @@ public class UpfGateProcessorTest {
 
                 Document document = result.get().asDocument();
 
-//                if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
-                if (true){
+                if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
                     // Check if exists
                     String fileName = StringUtils.substringAfterLast(document.getUri(), "/") + ".pdf";
                     File pdfFile = Paths.get("documents",fileName).toFile();
