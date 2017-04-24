@@ -118,6 +118,11 @@ public class UpfGateProcessorTest {
                 Document document = result.get().asDocument();
 
                 if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
+
+                    document.setDescription("-");
+                    document.setAuthoredBy("-");
+                    udm.save(document);
+
                     // Check if exists
                     String fileName = StringUtils.substringAfterLast(document.getUri(), "/") + ".pdf";
                     File pdfFile = Paths.get("documents",fileName).toFile();
@@ -216,15 +221,17 @@ public class UpfGateProcessorTest {
             Optional<Resource> doc = udm.read(Resource.Type.DOCUMENT).byUri(resource.getUri());
 
             if (doc.isPresent()){
+                String uri = resource.getUri();
                 if( Strings.isNullOrEmpty(doc.get().asDocument().getDescription())) {
                     counterMissingDescription.getAndIncrement();
-                    String uri = resource.getUri();
-                    LOG.info("Document Missing Description: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
+//                    LOG.warn("Document Missing Description: " + StringUtils.replace(uri,"drinventor.eu","drinventor" +
+//                            ".dia.fi.upm.es"));
+                }else{
+                    LOG.info("Document Description: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
                 }
                 if( Strings.isNullOrEmpty(doc.get().asDocument().getAuthoredBy())) {
                     counterMissingAuthors.getAndIncrement();
-                    String uri = resource.getUri();
-                    LOG.info("Document Missing Authors: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
+//                    LOG.info("Document Missing Authors: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
                 }
 
             }
