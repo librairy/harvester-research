@@ -11,6 +11,7 @@ import com.google.common.base.Strings;
 import edu.upf.taln.dri.lib.Factory;
 import edu.upf.taln.dri.lib.exception.DRIexception;
 import es.cbadenes.lab.test.IntegrationTest;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -30,7 +31,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -113,8 +117,22 @@ public class UpfGateProcessorTest {
 
                 Document document = result.get().asDocument();
 
-                if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
-                    edu.upf.taln.dri.lib.model.Document gateDoc = Factory.getPDFloader().parsePDF(new URL(document.getRetrievedFrom()));
+//                if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
+                if (true){
+                    // Check if exists
+                    String fileName = StringUtils.substringAfterLast(document.getUri(), "/") + ".pdf";
+                    File pdfFile = Paths.get("documents",fileName).toFile();
+
+
+                    edu.upf.taln.dri.lib.model.Document gateDoc;
+                    if (pdfFile.exists()){
+                        LOG.info("Document already downloaded: " + document.getUri());
+                        gateDoc = Factory.getPDFloader().parsePDF(pdfFile.getAbsolutePath());
+                    }else{
+                        gateDoc = Factory.getPDFloader().parsePDF(new URL(document.getRetrievedFrom()));
+                    }
+
+
                     AnnotatedPaper annotatedDoc = processor.process(gateDoc);
 
                     if (!Strings.isNullOrEmpty(annotatedDoc.getTitle())) document.setTitle(annotatedDoc.getTitle());
@@ -192,22 +210,113 @@ public class UpfGateProcessorTest {
         totalSize = documents.size();
         LOG.info(documents.size() + " documents");
 
-        AtomicInteger counter = new AtomicInteger(0);
+        AtomicInteger counterMissingDescription = new AtomicInteger(0);
+        AtomicInteger counterMissingAuthors = new AtomicInteger(0);
         documents.parallelStream().forEach( resource -> {
 
             Optional<Resource> doc = udm.read(Resource.Type.DOCUMENT).byUri(resource.getUri());
 
-            if (doc.isPresent() && !Strings.isNullOrEmpty(doc.get().asDocument().getDescription())){
-                counter.getAndIncrement();
-                String uri = resource.getUri();
-                LOG.info("Document: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
+            if (doc.isPresent()){
+                if( Strings.isNullOrEmpty(doc.get().asDocument().getDescription())) {
+                    counterMissingDescription.getAndIncrement();
+                    String uri = resource.getUri();
+                    LOG.info("Document Missing Description: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
+                }
+                if( Strings.isNullOrEmpty(doc.get().asDocument().getAuthoredBy())) {
+                    counterMissingAuthors.getAndIncrement();
+                    String uri = resource.getUri();
+                    LOG.info("Document Missing Authors: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia.fi.upm.es"));
+                }
+
             }
 
         });
 
 
-        LOG.info(counter.get() + " of " + totalSize + " are processed");
+        LOG.info("Missing Descriptions: "   + counterMissingDescription.get() + " of " + totalSize );
+        LOG.info("Missing Authors: "        + counterMissingAuthors.get() + " of " + totalSize );
 
+    }
+
+    @Test
+    public void downloadDocuments(){
+
+        File folder = Paths.get("documents").toFile();
+
+        if (!folder.exists()){
+            folder.mkdirs();
+        }
+
+        // Documents
+        List<Resource> documents = udm.find(Resource.Type.DOCUMENT).all();
+        totalSize = documents.size();
+        LOG.info(documents.size() + " documents");
+
+        AtomicInteger counter = new AtomicInteger(0);
+        documents.parallelStream().forEach( resource -> {
+
+            Optional<Resource> doc = udm.read(Resource.Type.DOCUMENT).byUri(resource.getUri());
+
+            if (doc.isPresent()){
+
+                Document document = doc.get().asDocument();
+                String fileName = StringUtils.substringAfterLast(document.getUri(), "/") + ".pdf";
+                Path pdfFile = Paths.get(folder.getPath(), fileName);
+
+                if (!pdfFile.toFile().exists()){
+                    try {
+                        FileUtils.copyURLToFile(new URL(document.getRetrievedFrom()),pdfFile.toFile());
+                        LOG.info(document.getRetrievedFrom() + " downloaded!");
+                        counter.getAndIncrement();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
+
+
+        LOG.info("Total Documents: "    + totalSize );
+        LOG.info("Download Documents: " + counter );
+
+    }
+
+    @Test
+    public void fixDescriptions(){
+
+        // Documents
+        List<Resource> documents = udm.find(Resource.Type.DOCUMENT).all();
+        totalSize = documents.size();
+        LOG.info(documents.size() + " documents");
+        AtomicInteger counter = new AtomicInteger(0);
+        documents.parallelStream().forEach( resource -> {
+
+            Optional<Resource> doc = udm.read(Resource.Type.DOCUMENT).byUri(resource.getUri());
+
+            if (doc.isPresent()){
+
+                Document document = doc.get().asDocument();
+
+                if( !Strings.isNullOrEmpty(document.getDescription()) && document.getDescription().contains(". " +
+                        "Abstract")) {
+                    counter.getAndIncrement();
+
+
+                    String description = StringUtils.substringAfter(document.getDescription(), ". Abstract");
+                    document.setDescription(description);
+                    udm.save(document);
+
+                    String uri = resource.getUri();
+                    LOG.info("Document Error Description: " + StringUtils.replace(uri,"drinventor.eu","drinventor.dia" +
+                            ".fi.upm.es"));
+                }
+
+            }
+
+        });
+
+        LOG.info("Description Error: "        + counter.get() + " of " + totalSize );
 
     }
 
