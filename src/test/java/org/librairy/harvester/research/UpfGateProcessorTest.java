@@ -138,10 +138,14 @@ public class UpfGateProcessorTest {
                     AnnotatedPaper annotatedDoc = processor.process(gateDoc);
 
                     // abstract
+                    String abstractContent = annotatedDoc.getSections().get("abstract");
+                    if (!Strings.isNullOrEmpty(abstractContent))
+                        savePart("abstract",abstractContent, itemUri);
+
                     Map<String, String> rethoricalClasses = annotatedDoc.getRhetoricalClasses();
 
                     List<String> sections = Arrays.asList(new String[]{
-                            "abstract", "challenge", "background", "approach", "outcome", "futureWork"
+                            "challenge", "background", "approach", "outcome", "futureWork"
                     });
 
 
@@ -250,13 +254,31 @@ public class UpfGateProcessorTest {
         } catch (DRIexception drIexception) {
             drIexception.printStackTrace();
         }
-
-
-
-
-
-
     }
+
+    @Test
+    public void annotateDocument(){
+        try {
+            System.out.println("starting test");
+            LOG.info("Preparing Gate processor...");
+            GateProcessor gateProcessor = new GateProcessor();
+            URL url = this.getClass().getResource("/DRIconfig.properties");
+            gateProcessor.setDriConfigPath(new File(url.getFile()));
+            gateProcessor.setProxyEnabled(true);
+            gateProcessor.setup();
+            UpfProcessor upfProcessor = new UpfProcessor();
+
+            String uri = "http://drinventor.eu/documents/bd074764_cf3f_4656_a8ac_808873f156ce";
+
+            parse(upfProcessor, uri);
+
+            LOG.info("Operation Completed Successfully!!");
+
+        } catch (DRIexception drIexception) {
+            drIexception.printStackTrace();
+        }
+    }
+
 
     @Test
     public void evaluateDocuments(){
