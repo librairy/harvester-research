@@ -76,12 +76,12 @@ public class UpfProcessor {
             // -> approach
             List<Sentence> approachSentences = sentences.stream().filter(s -> s.getRhetoricalClass
                     ().equals(RhetoricalClassENUM.DRI_Approach)).collect(Collectors.toList());
-//            annotatedPaper.addRhetoricalClass("approach",_join(approachSentences));
+            annotatedPaper.addRhetoricalClass("approach",_join(approachSentences));
 
             // -> background
             List<Sentence> backgroundSentences = sentences.stream().filter(s -> s.getRhetoricalClass
                     ().equals(RhetoricalClassENUM.DRI_Background)).collect(Collectors.toList());
-//            annotatedPaper.addRhetoricalClass("background",_join(backgroundSentences));
+            annotatedPaper.addRhetoricalClass("background",_join(backgroundSentences));
 
             // -> outcome
             List<Sentence> outcomeSentences = sentences.stream().filter(s -> s.getRhetoricalClass

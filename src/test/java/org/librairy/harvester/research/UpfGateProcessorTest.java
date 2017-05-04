@@ -20,7 +20,9 @@ import org.librairy.harvester.research.data.AnnotatedPaper;
 import org.librairy.harvester.research.processor.DocumentProcessor;
 import org.librairy.harvester.research.processor.GateProcessor;
 import org.librairy.harvester.research.processor.UpfProcessor;
+import org.librairy.model.domain.relations.Describes;
 import org.librairy.model.domain.resources.Document;
+import org.librairy.model.domain.resources.Part;
 import org.librairy.model.domain.resources.Resource;
 import org.librairy.storage.UDM;
 import org.slf4j.Logger;
@@ -35,8 +37,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -117,6 +118,40 @@ public class UpfGateProcessorTest {
 
                 Document document = result.get().asDocument();
 
+
+                List<Resource> parts = udm.find(Resource.Type.PART).from(Resource.Type.DOCUMENT, document.getUri());
+
+
+                if (parts == null || parts.isEmpty()){
+
+                    List<Resource> items = udm.find(Resource.Type.ITEM).from(Resource.Type.DOCUMENT, document.getUri());
+
+                    if (items == null || items.isEmpty()){
+                        LOG.error("No item found by document: " + document.getUri());
+                        return;
+                    }
+
+                    String itemUri = items.get(0).getUri();
+
+
+                    edu.upf.taln.dri.lib.model.Document gateDoc = Factory.getPDFloader().parsePDF(new URL(document.getRetrievedFrom()));
+                    AnnotatedPaper annotatedDoc = processor.process(gateDoc);
+
+                    // abstract
+                    Map<String, String> rethoricalClasses = annotatedDoc.getRhetoricalClasses();
+
+                    List<String> sections = Arrays.asList(new String[]{
+                            "abstract", "challenge", "background", "approach", "outcome", "futureWork"
+                    });
+
+
+                    for (String section: sections){
+                        if (rethoricalClasses.containsKey(section)){
+                            savePart(section,rethoricalClasses.get(section),itemUri);
+                        }
+                    }
+                }
+
                 if (Strings.isNullOrEmpty(document.getDescription()) || Strings.isNullOrEmpty(document.getAuthoredBy())){
 
                     document.setDescription("-");
@@ -164,6 +199,23 @@ public class UpfGateProcessorTest {
         } catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    private void savePart(String sense, String content, String itemUri){
+        Part part = new Part();
+        part.setContent(content);
+        part.setSense(sense);
+        part.setCreationTime("2017-02-01T13:30+0200");
+        udm.save(part);
+
+        Describes describes = new Describes();
+        describes.setCreationTime("2017-02-01T13:30+0200");
+        describes.setEndUri(itemUri);
+        describes.setStartUri(part.getUri());
+        describes.setWeight(1.0);
+        udm.save(describes);
+
 
     }
 
