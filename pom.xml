@@ -1111,14 +1111,14 @@
                     <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
                     <skipDeploy>true</skipDeploy>
                 </configuration>
-            </plugin>
+            </plugin-->
             <plugin>
                 <groupId>com.github.github</groupId>
                 <artifactId>site-maven-plugin</artifactId>
@@ -1202,58 +1202,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- allows running this example with mvn jetty:run -->
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty.plugin.version}</version>
-                <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
-                    <webApp>
-                        <contextPath>/harvester</contextPath>
-                    </webApp>
-                    <useTestScope>true</useTestScope>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>LIBRAIRY_HOME</name>
-                            <value>.</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>COLUMN_DB_HOST</name>
-                            <value>wiig.dia.fi.upm.es</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>COLUMN_DB_PORT</name>
-                            <value>5011</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>DOCUMENT_DB_HOST</name>
-                            <value>wiig.dia.fi.upm.es</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>DOCUMENT_DB_PORT</name>
-                            <value>5021</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>GRAPH_DB_HOST</name>
-                            <value>wiig.dia.fi.upm.es</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>GRAPH_DB_PORT</name>
-                            <value>5030</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>MESSAGE_BROKER_HOST</name>
-                            <value>wiig.dia.fi.upm.es</value>
-                        </systemProperty>
-                        <systemProperty>
-                            <name>MESSAGE_BROKER_PORT</name>
-                            <value>5041</value>
-                        </systemProperty>
-                    </systemProperties>
-                </configuration>
             </plugin>
 
             <!-- Docker Plugin -->
