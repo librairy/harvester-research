@@ -24,8 +24,8 @@ ftp:
   volumes:
     - ./data:/home/ftpusers/librairy
 harvester:
-  container_name: harvester
-  image: librairy/harvester
+  container_name: harvesterResearch
+  image: librairy/harvester-research
   volumes:
     - ./data:/librairy/files/custom
   links:
@@ -53,7 +53,7 @@ Instead of deploy all containers as a whole, you can deploy each of them indepen
 
 - **Harvester**:
     ```sh
-    $ docker run -it --rm --name harvester -v ./documents:/librairy/files librairy/harvester
+    $ docker run -it --rm --name harvester -v ./documents:/librairy/files librairy/harvester-research
     ```
 
 Remember that by using the flags: `-it --rm`, the services runs in foreground mode. Instead, you can deploy it in background mode as a domain service by using: `-d --restart=always`
