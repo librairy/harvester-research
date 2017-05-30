@@ -12,7 +12,7 @@ Collect and process unstructured files to retrieve the full-text content and der
 
 A prerequisite to consider is to have installed [Docker-Compose](https://docs.docker.com/compose/) in your system.
 
-You can run this service in a isolated way (see *Distibuted Deployment* section) or as extension of the [explorer](https://github.com/librairy/explorer).
+You can run this service in a isolated way (see *Distibuted Deployment* section) or as extension of the [api](https://github.com/librairy/api).
 In that case, add the following services to the existing `docker-compose.yml` file:
 
 ```yml
@@ -40,7 +40,7 @@ and then, deploy it by typing:
 ```sh
 $ docker-compose up
 ```
-That's all!! **librairy harvester** should be run in your system now along with **librairy explorer**.
+That's all!! **harvester-research** should be run in your system now along with **librairy**.
 
 ## Distributed Deployment
 
