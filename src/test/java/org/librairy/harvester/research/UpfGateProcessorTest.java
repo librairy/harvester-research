@@ -258,25 +258,18 @@ public class UpfGateProcessorTest {
 
     @Test
     public void annotateDocument(){
-        try {
-            System.out.println("starting test");
-            LOG.info("Preparing Gate processor...");
-            GateProcessor gateProcessor = new GateProcessor();
-            URL url = this.getClass().getResource("/DRIconfig.properties");
-            gateProcessor.setDriConfigPath(new File(url.getFile()));
-            gateProcessor.setProxyEnabled(true);
-            gateProcessor.setup();
-            UpfProcessor upfProcessor = new UpfProcessor();
 
-            String uri = "http://drinventor.eu/documents/bd074764_cf3f_4656_a8ac_808873f156ce";
+        String uri = "http://drinventor.eu/documents/bd074764_cf3f_4656_a8ac_808873f156ce";
 
-            parse(upfProcessor, uri);
+        Document document = udm.read(Resource.Type.DOCUMENT).byUri(uri).get().asDocument();
 
-            LOG.info("Operation Completed Successfully!!");
 
-        } catch (DRIexception drIexception) {
-            drIexception.printStackTrace();
-        }
+        List<Resource> items = udm.find(Resource.Type.ITEM).from(Resource.Type.DOCUMENT, uri);
+
+        savePart("abstract",document.getDescription(), items.get(0).getUri());
+
+        LOG.info("Operation Completed Successfully!!");
+
     }
 
 
